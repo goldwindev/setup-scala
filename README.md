@@ -5,11 +5,13 @@ sbt.
 
 - Configurable Java version: supports OpenJDK, GraalVM, Zulu and any other Java
   version that's installable via Jabba.
+- The `sbt` command is installed using the
+  [paulp/sbt-extras](https://github.com/paulp/sbt-extras/) launcher.
+- For faster startup, the `csbt` command is installed using the Coursier-based
+  [coursier/sbt-extras](https://github.com/coursier/sbt-extras/) launcher. This
+  launcher does not work with all builds, only use `csbt` if you know what you
+  are doing.
 - Cross-platform: works on Linux, macOS, Windows.
-- The `sbt` command is provided, with the official sbt launch script.
-- The following alternate sbt launch scripts are also provided:
-  - `sbtx` runs the [sbt-extras](https://github.com/dwijnand/sbt-extras/) launcher.
-  - `csbt` runs the [Coursier-based sbt-extras](https://github.com/coursier/sbt-extras/) launcher.
 
 ## Usage:
 
@@ -26,7 +28,7 @@ In your GitHub Actions workflow, add a `uses:` declaration before calling the
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-+     - uses: olafurpg/setup-scala@v11
++     - uses: olafurpg/setup-scala@v10
       - name: Compile
         run: sbt compile
 ```
@@ -45,7 +47,7 @@ The default Java version is the latest OpenJDK 8 HotSpot version via
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v11
+      - uses: olafurpg/setup-scala@v10
 +       with:
 +         java-version: adopt@1.11
       - name: Compile
@@ -81,7 +83,7 @@ fails.
 +       fail-fast: false
       steps:
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v11
+      - uses: olafurpg/setup-scala@v10
       - name: Compile
         run: sbt compile
 ```
@@ -111,7 +113,7 @@ configure git to disable Windows line feeds.
 +       run: "git config --global core.autocrlf false"
 +       shell: bash
       - uses: actions/checkout@v1
-      - uses: olafurpg/setup-scala@v11
+      - uses: olafurpg/setup-scala@v10
       - name: Compile
 +       shell: bash
         run: sbt compile
@@ -139,7 +141,7 @@ compatibility with previous tagged release from the branch.
 +         fetch-depth: 100
 +     - name: Fetch tags
 +       run: git fetch --depth=100 origin +refs/tags/*:refs/tags/*
-      - uses: olafurpg/setup-scala@v11
+      - uses: olafurpg/setup-scala@v10
       - name: Compile
         run: sbt compile
 ```

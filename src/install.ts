@@ -19,7 +19,7 @@ function jabbaUrlSuffix(): string {
   const runnerOs = shell.env["RUNNER_OS"] || "undefined";
   switch (runnerOs.toLowerCase()) {
     case "linux":
-      const arch = shell.exec("uname -m", { silent: true }).stdout.trim();
+      const arch = shell.exec("uname -m", { silent: true }).stdout;
       switch (arch) {
         case "arm64":
         case "aarch64":
@@ -114,12 +114,8 @@ function installSbt() {
   core.startGroup("Install sbt");
   core.addPath(bin);
   curl(
-    "https://raw.githubusercontent.com/sbt/sbt/develop/sbt",
+    "https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt",
     path.join(bin, "sbt")
-  );
-  curl(
-    "https://raw.githubusercontent.com/dwijnand/sbt-extras/master/sbt",
-    path.join(bin, "sbtx")
   );
   curl(
     "https://raw.githubusercontent.com/coursier/sbt-extras/master/sbt",
